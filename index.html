@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name='x5-orientation' content='portrait'/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="x5-fullscreen" content="true">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>Document</title>
+	<style>
+		body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,figcaption,figure,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
+		body,button,input,select,textarea{font:12px/1 Helvetica,Arial,Verdana,sans-serif}
+		h1{font-size:18px;font-weight:normal}
+		h2{font-size:16px;font-weight:normal}
+		h3{font-size:14px;font-weight:normal}
+		h4,h5,h6{font-size:100%;font-weight:normal}
+		address,cite,dfn,em,var{font-style:normal}
+		code,kbd,pre,samp,tt{font-family:"Courier New",Courier,monospace}
+		small{font-size:12px}
+		ul,ol,li{list-style:none}
+		a{text-decoration:none}
+		abbr[title],acronym[title]{border-bottom:1px dotted;cursor:help}
+		q:before,q:after{content:''}
+		legend{color:#000}
+		fieldset,img{border:0}
+		table{border-collapse:collapse;border-spacing:0}
+		hr{border:0;height:1px}
+		*{-ms-word-break:break-all;word-break:break-all;-ms-word-wrap:break-word;word-wrap:break-word;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+		body {
+			overflow-x: hidden;
+			background-color: #f08080;
+			overflow-y: hidden;
+			height: 4.5rem;
+			width: 8rem;
+			padding: 0.25rem 0;
+			position: relative;
+		}
+		
+
+		ul#freezoom {
+			position: relative;
+			width: 8rem;
+			height: 4rem;
+			
+		}
+
+		#freezoom li {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: .05rem;
+			box-sizing: border-box;
+			-webkit-transition: 1s cubic-bezier(.55,-0.2,.7,1.42);
+			opacity: .2;
+			filter: blur(10px);
+			overflow: hidden;	
+		}
+
+		#freezoom li div {
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			text-align: center;
+			color: #800000;
+			font: 1rem/1rem arial;
+			-webkit-transition: 1s border-radius ease-out;
+			border-radius: 0px;
+		}
+
+	</style>
+
+</head>
+<body>
+<ul id="freezoom">
+	<li>12</li>
+</ul>
+<script src="./libs/hammer.js"></script>
+
+	
+
+	
+<script>
+
+	//几个方法 实现jquery 的链式调用 以及个人使用最多的几个方法 
+	//自定义事件  和 触发器  @@@@ 模拟 单点 和  多指
+
+	//基于DOM扩展缺点有：缺少标准无规律、提高冲突可能性、性能以及浏览器支持
+	//扩展名字任意命，很有可能就会与未来DOM浏览器本身支持的方法相互冲突
+	//扩展无规律，很有可能出现A和B同名不同功能的扩展而造成冲突
+
+	
+	// 一个元素
+	var qs = function(selector) {
+		if ( typeof selector === 'object' ) {
+			return new Hammer(selector);
+		} else {
+			return new Hammer(document.querySelector(selector));
+		}
+	};
+
+
+	// 一组元素 
+	var qsa = function(selector){
+		var hammerGroup = [];
+		if ( typeof selector === 'string' ) {
+			selector = document.querySelectorAll(selector);
+		}
+		for (var i = 0; i < selector.length; i++) {
+			hammerArray.push(new Hammer(selector[i]));
+		};
+		return hammerGroup;
+	};
+
+	// 创建并选中
+	var qsn = function( tagName ) {
+		return new Hammer( document.createElement(tagName));
+	};
+
+
+
+	
+	var REM = Math.floor ( window.innerWidth / 8 );
+
+	var html = qs('html');
+
+	var body = qs('body');
+
+	html.css("fontSize", REM + "px");
+
+	body.css("fontSize", "12px");
+
+	
+
+	document.addEventListener('touchstart', function(ev) {
+		ev.preventDefault();
+	});
+
+	// Hammer.on(window,'click',function(ev) {
+	// 	console.log(ev)
+	// })
+	
+</script>
+<script>
+
+	
+	
+	var option = {
+
+		parentNode: document.querySelector("#freezoom"),
+		wrap: [4, 8],
+		items: [ 'is34','is22','is12','is21','is11'],
+		hmGroup: [],
+
+		is34: [
+		{
+			// isMain: true,
+			// col: 0,
+			// row: 0,
+			text: 31,
+			sizey: 3,
+			sizex: 4,
+		}],
+		
+		is22: [
+		{ 
+			
+			sizex: 2,
+			sizey: 2,
+			text: 44
+		}],
+
+		is12: [
+		{ 
+			
+			sizex: 1,
+			sizey: 2,
+			text: 22
+		},
+		{ 
+			sizex: 1,
+			sizey: 2,
+			text: 33
+		}],
+
+		is21: [
+		{ 	
+			sizex: 2,
+			sizey: 1,
+			text: 55
+		},
+		{ 	
+			isMain: true,
+			col: 1,
+			row: 1,
+			sizex: 2,
+			sizey: 1,
+			text: 66
+		},
+		{ 	
+			sizex: 2,
+			sizey: 1,
+			text: 77
+		},
+		{ 	
+			sizex: 2,
+			sizey: 1,
+			text: 88
+		}],
+	
+
+		is11: [
+
+		{ 
+			sizex: 1,
+			sizey: 1,
+			text: 43
+		},
+		{ 
+			sizex: 1,
+			sizey: 1,
+			text: 46
+		},
+		{ 
+			sizex: 1,
+			sizey: 1,
+			text: 53
+		},
+		{ 
+			sizex: 1,
+			sizey: 1,
+			text: 46
+		}]
+	
+	};
+
+	
+	// 必须是走两轮循环  第一轮根据特异元素初始化矩阵  第二轮计算矩阵
+	
+	var Freezoom = function(option) {
+		for ( attr in option ) {
+			this[attr] = option[attr];
+		};
+
+	};	
+
+	Freezoom.prototype = {
+		constructor: Freezoom,
+		init: function(){
+			this.calPos();
+			this.renderDOM();
+		},
+		matrix: function(){
+			// 感觉类型化数组受限制 自己初始化一个二维数组吧 
+			var arr = new Array(this.wrap[0]);
+			for (var i = 0; i < arr.length; i++) {
+				arr[i] = new Array(this.wrap[1]);
+				for (var j = 0; j < arr[i].length; j++) {
+					arr[i][j] = 0;
+				};
+			};
+			return arr;
+		},
+		isempty: function( aim, target ){
+	 		var res = 0;
+	 		var _res = 0;
+	 		var coords = {};	
+	 		// console.log(target.length - aim.sizey, target[0].length - aim.sizex)  2 6
+	 		// 行循环 3 次  0 1 2
+	 		// 列循环 7 次  0 1 2 3 4 5 6
+			for (var i = 0; i <= target.length - aim.sizey ; i++) {
+				for (var j = 0; j <= target[i].length - aim.sizex ; j++) {
+					
+					// 初始化一个变量 空矩阵存在
+					_res = 0;
+					for (var k = 0; k < aim.sizey; k++) {
+						for (var l = 0; l < aim.sizex; l++) {
+
+							// 阵点被占用 矩阵不可用 
+							if (target[i+k][j+l] !== 0 ) {
+								_res = 1;
+								res = 0;
+
+								break;							
+							} else {
+								res = 1;
+								coords.x = j;
+								coords.y = i;
+							}
+						};
+						if ( _res ) {
+							break;
+						}
+					};
+
+					if ( res ) {
+						break;
+					}
+				};
+
+				if ( res ) {
+					break;
+				}
+			};
+
+
+			for (var m = coords.y; m < coords.y + aim.sizey; m++) {
+				for (var n = coords.x; n < coords.x + aim.sizex; n++) {
+					target[m][n] = aim.text
+				};
+			};
+
+			aim.col = coords.x;
+			aim.row = coords.y;
+			
+		},
+
+		calPos: function() {
+			var target = this.matrix();
+			// console.log(this.items);
+			this.items.forEach(function(e) {
+				this[e].forEach(function(f) {
+ 					if (f.isMain) {
+ 						for (var i = f.row; i < f.row + f.sizey; i++) {
+ 							for (var j = f.col; j < f.col + f.sizex; j++) {
+ 								target[i][j] = f.text;
+ 							};
+ 						};
+ 					}
+				},this)
+			},this);
+
+			this.items.forEach(function(e) {
+				this[e].forEach(function(f) {
+ 					if (f.isMain) {
+ 						delete f.isMain;
+ 					} else { 
+ 						this.isempty(f,target);
+ 					}
+				},this)
+			},this);
+			// console.log(JSON.stringify(target))
+		},
+
+		renderStyle: function(hm,json) {
+			var _this = this;
+
+			// 这里传入的对象是一个 hammer 对象
+			hm.css({
+				top: json.row * REM  + "px",
+				left: json.col * REM  + "px",
+				width: json.sizex * REM  + "px",
+				height: json.sizey * REM  + "px",
+				filter: "blur(0px)",
+				opacity: 0.8
+			}).attr({
+				row: json.row,
+				col: json.col,
+				sizex: json.sizex,
+				sizey: json.sizey
+			});
+			json.hm = hm;
+
+			qs(hm.element.children[0]).css({
+				borderRadius: "20px",
+				lineHeight: json.sizey * REM * 0.9 + "px",
+
+				fontSize: json.sizey * REM/2 + "px"
+			});
+			
+		},
+
+		updateStyle: function() {
+
+			 this.items.forEach(function(e,i) {
+				this[e].forEach(function(f,j) {
+ 					f.hm.css({
+ 						top: f.row * REM  + "px",
+ 						left: f.col * REM  + "px",
+ 						width: f.sizex * REM  + "px",
+ 						height: f.sizey * REM  + "px",
+ 						webkitTransition:  '1s cubic-bezier(.55,-0.2,.7,1.42)' + (i*100 + j*50) +  'ms',
+						transition:  '1s cubic-bezier(.55,-0.2,.7,1.42)' + (i*100 + j*50) +  'ms',
+
+ 					}).attr({
+ 						row: f.row,
+ 						col: f.col,
+ 						sizex: f.sizex,
+ 						sizey: f.sizey
+ 					})
+				},this)
+			},this);
+		},
+
+		renderDOM: function(){
+
+			this.parentNode.innerHTML = '';
+			this.items.forEach(function(e) {
+				this[e].forEach(function(f,i) {
+ 					var li = qsn('li');
+					li.html("<div>" + f.text + "</div>").attr({
+						egroup: e,
+						fgroup: i 
+					});
+					this.renderStyle(li, f);
+					this.drag(li);
+					this.zoom(li);
+					// 这里创建的是一个伪DOM 所以 appendChild(li.element) 
+					this.hmGroup.push(li);
+					this.parentNode.appendChild(li.element);
+				},this)
+			},this);
+		},
+ 
+
+		zoom: function( hm ) {
+			hm.get('pinch').set({ enable: true});
+			hm.on('pinchout',function(ev) {
+				hm.css({
+					top: 0,
+					left: 0,
+					width: 8*REM + 'px',
+					height: 4*REM + 'px',
+					opacity:1,
+					zIndex: 3,
+					webkitTransition:  '0.6s cubic-bezier(.55,-0.2,.7,1.42)',
+					transition:  '0.6s cubic-bezier(.55,-0.2,.7,1.42)'
+				});
+			});
+			hm.on('pinchin',function(ev) {
+				hm.css({
+					top: hm.attr('row')*REM + 'px',
+					left: hm.attr('col')*REM + 'px',
+					width: hm.attr('sizex')*REM + 'px',
+					height: hm.attr('sizey')*REM + 'px',
+					opacity: 0.8,
+					zIndex: 0
+				});
+			})
+		},
+
+		drag: function( hm ){
+			// 
+			var _this = this;
+		
+			hm.on('press',function(ev){
+				// hm.center = ev.center;
+				hm.posX =  ev.center.x - hm.element.offsetLeft;
+				hm.posY =  ev.center.y - hm.element.offsetTop;
+
+				hm.css({
+					zIndex: 2,
+					transition: '0s cubic-bezier(.55,-0.2,.7,1.42)',
+					webkitTransition:  '0s cubic-bezier(.55,-0.2,.7,1.42)'
+				});
+				hm.element.children[0].style.boxShadow = 'inset 0 0 20px #555';
+				hm.on('panmove',function(ev) {
+					hm.css({
+						left: ev.center.x - hm.posX + "px",
+						top: ev.center.y - hm.posY + "px"
+					});
+				});
+
+				hm.on('panend',function(ev) {
+
+					/*
+						* 整点限制
+						* 边界限制
+						* 网格限制	
+					*/
+
+					var limitX = Math.round((ev.center.x - hm.posX)/REM);
+					var limitY = Math.round((ev.center.y - hm.posY)/REM);
+
+					limitX = Math.max(0,limitX) && Math.min(limitX, 8 - hm.attr('sizex'));
+					limitY = Math.max(0,limitY) && Math.min(limitY, 4 - hm.attr('sizey'));
+					// limitX = Math.floor( limitX / hm.attr('sizex') ) * hm.attr('sizex');
+					// limitY = Math.floor( limitY / hm.attr('sizey') ) * hm.attr('sizey');
+					hm.css({
+						transition: '0.6s cubic-bezier(.55,-0.2,.7,1.42)',
+						webkitTransition:  '0.6s cubic-bezier(.55,-0.2,.7,1.42)',
+						left: limitX * REM + "px",
+						top: limitY * REM + "px"
+					});
+					hm.element.children[0].style.boxShadow = '';
+
+					console.log(limitX, limitY);
+					console.log(hm.attr('egroup'));
+
+					var bool1 =  ( limitX === 3 || limitX === 4 );
+					var bool2 =  ( limitX === 2 || limitX === 3 );
+					var bool3 = hm.attr('sizex') === '2';
+					console.log(hm)
+
+					if ( bool1 && bool2 && bool3 ) {
+						limitX = 2;
+					}
+
+
+					// 设置特异矩阵 
+					// 根据特异矩阵初始化 阵列排布
+					var e = _this[hm.attr('egroup')][hm.attr('fgroup')];
+					console.log(e.isMain)
+
+					e.isMain = true;
+					e.col = limitX;
+					e.row = limitY;
+					
+					
+					
+					_this.calPos();
+					_this.updateStyle();
+
+
+					hm.off('panmove panend');
+					
+				})
+			})
+		}
+
+	}
+
+	var fz = new Freezoom(option);	
+	fz.init();
+	
+
+</script>
+</body>
+</html>
